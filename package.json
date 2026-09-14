@@ -1,0 +1,5 @@
+{
+  "name": "trident-group-website",
+  "private": true,
+  "scripts": { "test": "node --test tests/site.test.mjs" }
+}

@@ -46,14 +46,40 @@ test('quote form contains role-adaptive professional fields and privacy wording'
   for (const field of ['clientRole','accessWidth','occupiedSite','quotationDeadline','drawingRevision','siteMeeting']) {
     assert.match(html, new RegExp(`(?:name|id)="${field}"`));
   }
-  assert.match(html, /Photos, drawings, BOQ or method statement/);
+  assert.match(html, /Drawings, BOQ or method statement/i);
   assert.match(html, /privacy/i);
   const js = readFileSync('assets/site.js', 'utf8');
   assert.match(js, /professional-fields/);
-  assert.match(js, /TRI-/);
+  assert.match(js, /QUICK PROJECT ENQUIRY/);
+  assert.match(js, /PROFESSIONAL PROJECT ENQUIRY/);
 });
 
 test('unverified contact and legal facts are not guessed', () => {
   const combined = pages.map(page => readFileSync(page, 'utf8')).join('\n');
-  for (const placeholder of ['[PHONE]','[WHATSAPP]','[EMAIL]']) assert.match(combined, new RegExp(placeholder.replace(/[\[\]]/g, '\\$&')));
+  assert.doesNotMatch(combined, /\[(PHONE|WHATSAPP|EMAIL|ADDRESS OR SERVICE AREA|LEGAL NAME|REGISTRATION NUMBER|VAT NUMBER IF REQUIRED|BUSINESS HOURS|LICENCE DETAILS|INSURANCE DETAILS|SOCIAL LINKS|RESPONSE EXPECTATION)\]/);
+});
+
+test('enquiry page offers quick and professional WhatsApp routes', () => {
+  const html = readFileSync('request-a-quote.html', 'utf8');
+  assert.match(html, /Quick WhatsApp Enquiry/);
+  assert.match(html, /Professional Project Enquiry/);
+  assert.match(html, /Continue on WhatsApp/);
+  assert.match(html, /35679990305/);
+  assert.doesNotMatch(html, /type="file"/);
+  assert.doesNotMatch(html, /type="email"[^>]*required/);
+  const js = readFileSync('assets/site.js', 'utf8');
+  assert.match(js, /wa\.me\/35679990305/);
+  assert.match(js, /encodeURIComponent/);
+});
+
+test('brand hierarchy and expanded confirmed services are clear', () => {
+  const home = readFileSync('index.html', 'utf8');
+  const rockscape = readFileSync('rockscape-solutions.html', 'utf8');
+  const equipment = readFileSync('equipment-and-access.html', 'utf8');
+  assert.ok(home.indexOf('Trident Group Solutions') < home.indexOf('Trident Rockscape Solutions'));
+  assert.match(rockscape, /jackhammer/i);
+  assert.match(rockscape, /building demolition/i);
+  assert.match(equipment, /Coming soon/i);
+  assert.match(equipment, /drum cutter/i);
+  assert.match(equipment, /site dumper/i);
 });

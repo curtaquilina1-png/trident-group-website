@@ -112,3 +112,10 @@ textarea{min-height:160px}
 @media(max-width:960px) and (min-width:760px){.brand{font-size:1rem}.nav{gap:.65rem}.nav-links{gap:.55rem}.nav-links a{font-size:.7rem}}
 @media(max-width:759px){.wrap{width:min(calc(100% - 2rem),var(--max))}.nav{min-height:72px}.nav-links{top:72px}.brand{font-size:1.08rem}.hero{padding:4rem 0 4.5rem}.hero h1{font-size:clamp(2.6rem,10.2vw,4.2rem);max-width:13ch}.hero-grid{gap:2.5rem}.action-media{max-width:290px}.action-media video{aspect-ratio:478/650}.section{padding:3.5rem 0}.section .split{gap:1rem}.cookie-banner{max-height:55vh;overflow:auto}.cookie-banner .button{font-size:.78rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;transform:none!important}}
+/* Project media and founder content */
+.portfolio-video{display:grid;grid-template-columns:minmax(200px,320px) 1fr;gap:2rem;align-items:center;background:#172630;color:#eee9e0;border-left:5px solid #bd8244;padding:1.4rem;margin:0 0 2.8rem}
+.portfolio-video-frame{max-width:300px;width:100%;margin:auto;background:#0d151a}
+.portfolio-video video{width:100%;max-height:440px;aspect-ratio:478/650;object-fit:contain}
+.portfolio-video figcaption{font-weight:750;font-size:clamp(1.18rem,2.3vw,1.8rem);max-width:18ch;line-height:1.45}
+.legal h2{padding-top:.5rem;border-top:1px solid #c9c2b5;max-width:none}
+@media(max-width:560px){.portfolio-video{grid-template-columns:1fr;gap:1.2rem}.portfolio-video figcaption{font-size:1rem;max-width:unset}}
